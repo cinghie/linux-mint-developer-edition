@@ -22,6 +22,7 @@ This project follows the same idea as my macOS Homebrew useful-software project,
 ## Guides
 
 - [Installation and USB Guide](Installation%20and%20USB%20Guide.md)
+- [Post-Installation Optimization Guide](Post%20Installation%20Optimization%20Guide.md)
 - [Development Useful Software](Development%20Useful%20Software.md)
 - [Personal Useful Software](Personal%20Useful%20Software.md)
 
@@ -92,11 +93,12 @@ The goal is to keep the host small, predictable and performant. A public bootstr
 6. Install system updates.
 7. Configure hardware drivers using Linux Mint Driver Manager.
 8. Configure Timeshift before major customizations.
-9. Install Essential software.
-10. Install Recommended development tools actually used on the workstation.
-11. Add Optional tools only when needed.
-12. Configure Git, SSH and GitHub CLI using personal values locally only.
-13. Configure backups and sanitized dotfiles.
+9. Follow the [Post-Installation Optimization Guide](Post%20Installation%20Optimization%20Guide.md) to establish a safe performance baseline.
+10. Install Essential software.
+11. Install Recommended development tools actually used on the workstation.
+12. Add Optional tools only when needed.
+13. Configure Git, SSH and GitHub CLI using personal values locally only.
+14. Configure backups and sanitized dotfiles.
 
 See the complete [Installation and USB Guide](Installation%20and%20USB%20Guide.md) before modifying disks or replacing an existing operating system.
 
