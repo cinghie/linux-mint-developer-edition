@@ -28,13 +28,63 @@ Do not download installation images from random file-hosting sites, forums, soft
 
 ## 2. Verify the ISO before writing the USB
 
-Verifying the ISO protects against both corrupted downloads and modified images.
+**Do not skip this step. Verify the downloaded ISO before creating the USB stick.**
 
-Official instructions:
+Verification detects incomplete/corrupted downloads and helps ensure that the image you are about to boot is the expected Linux Mint image.
+
+Official Linux Mint verification instructions:
 
 https://linuxmint-installation-guide.readthedocs.io/en/latest/verify.html
 
-### On Linux Mint
+Official Linux Mint mirrors publish `sha256sum.txt` and `sha256sum.txt.gpg` alongside the ISO. Do not copy a checksum permanently into this repository: checksums change with every ISO release.
+
+### Windows — recommended quick verification
+
+Windows already includes tools capable of calculating SHA-256, so no third-party checksum utility is required.
+
+1. Download the Linux Mint ISO from an official mirror.
+2. From the same Linux Mint release/mirror, obtain or open the official `sha256sum.txt` file.
+3. Open **PowerShell** in the folder containing the downloaded ISO.
+4. Run:
+
+```powershell
+Get-FileHash -Algorithm SHA256 .\linuxmint.iso
+```
+
+Replace `linuxmint.iso` with the actual downloaded filename. For example, use the exact filename shown in your Downloads folder rather than renaming files just to match this guide.
+
+PowerShell prints output similar to:
+
+```text
+Algorithm  Hash                                                              Path
+---------  ----                                                              ----
+SHA256     <64-character SHA-256 value>                                       ...
+```
+
+Compare the complete 64-character hash with the SHA-256 value listed for **that exact ISO filename** in the official Linux Mint `sha256sum.txt`.
+
+**The two values must match exactly.** Letter case is not important for hexadecimal hashes, but every hexadecimal character must otherwise be identical.
+
+If they do not match:
+
+- **do not flash or boot the ISO**;
+- delete the downloaded ISO;
+- download it again from an official Linux Mint mirror;
+- calculate the SHA-256 again.
+
+#### Windows alternative: Command Prompt / certutil
+
+If preferred, Windows Command Prompt can calculate SHA-256 with:
+
+```cmd
+certutil -hashfile "linuxmint.iso" SHA256
+```
+
+Again, compare the complete resulting hash with the official value in `sha256sum.txt`.
+
+> **Important:** matching SHA-256 values establish that your ISO matches the file described by `sha256sum.txt`. For stronger authenticity verification, also verify the GPG signature of `sha256sum.txt` according to Linux Mint's official verification guide. SHA-256 comparison and GPG signature verification serve related but different purposes.
+
+### Linux Mint
 
 Right-click the ISO and choose **Verify**, or run:
 
@@ -44,27 +94,35 @@ mint-iso-verify linuxmint.iso
 
 Replace `linuxmint.iso` with the actual ISO filename.
 
-### SHA-256 integrity check
+### Linux
 
-Official Linux Mint mirrors publish `sha256sum.txt` and `sha256sum.txt.gpg` alongside the ISO.
-
-On Linux:
+Calculate SHA-256 with:
 
 ```bash
 sha256sum -b linuxmint.iso
 ```
 
-On macOS:
+Compare the complete result with the corresponding entry in the official `sha256sum.txt` file.
+
+### macOS
+
+Calculate SHA-256 with:
 
 ```bash
 shasum -a 256 linuxmint.iso
 ```
 
-Compare the result with the corresponding entry in the official `sha256sum.txt` file.
+Compare the complete result with the corresponding entry in the official `sha256sum.txt` file.
 
-If the hashes do not match, **do not use the ISO**. Delete it and download it again from an official source.
+### Stronger authenticity verification
 
-For a stronger authenticity check, follow Linux Mint's official instructions to verify the GPG signature of `sha256sum.txt`. Do not hard-code copied checksums into this repository because release files and hashes change over time.
+A checksum comparison is useful only when the reference checksum itself is trustworthy. Linux Mint therefore also provides `sha256sum.txt.gpg` so the checksum list can be authenticated cryptographically.
+
+For the full GPG authenticity procedure, always follow the current official Linux Mint instructions:
+
+https://linuxmint-installation-guide.readthedocs.io/en/latest/verify.html
+
+Do not hard-code signing-key fingerprints, copied checksums or release-specific commands into this repository unless they are intentionally maintained and reviewed when releases change.
 
 ## 3. Choose a USB stick
 
@@ -109,11 +167,13 @@ https://etcher.balena.io/
 
 1. Download Etcher only from the official balena website above.
 2. Start Etcher.
-3. Select the verified Linux Mint ISO.
+3. Select the **already verified** Linux Mint ISO.
 4. Select the USB stick.
 5. Confirm the target capacity/device carefully.
 6. Start the flash operation.
 7. Wait for writing and verification to complete.
+
+> Etcher's post-write verification is useful, but it does **not replace the pre-flash comparison of the downloaded ISO against Linux Mint's official SHA-256 value** described above.
 
 If Windows offers to format partitions on the USB after flashing, cancel that request. Windows may not recognize all Linux/ISO filesystem structures and this does not mean the USB is broken.
 
@@ -289,7 +349,8 @@ After that, the USB can be reformatted and reused normally.
 ```text
 Download Linux Mint only from the official site or listed official mirrors.
 Download USB creation software only from its official vendor/project site.
-Verify the ISO.
+Verify the ISO before writing it to USB.
+On Windows, use Get-FileHash or certutil and compare the full SHA-256 with Linux Mint's official sha256sum.txt.
 Back up important data.
 Confirm the target USB before flashing.
 Confirm the target internal disk before installing.
