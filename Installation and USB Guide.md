@@ -4,15 +4,35 @@ Safe installation guide for **Linux Mint 22.3 Cinnamon Edition, 64 bit**.
 
 > **Warning:** creating a bootable USB erases the selected USB device. Installing Linux Mint with the **Erase disk** option erases the selected internal disk. Back up important data first and verify device names carefully before writing anything.
 
+## Official download links
+
+Use official project/vendor pages rather than third-party download portals:
+
+- **Linux Mint official download:** https://www.linuxmint.com/download.php
+- **Linux Mint official installation guide:** https://linuxmint-installation-guide.readthedocs.io/en/latest/
+- **Linux Mint official ISO verification guide:** https://linuxmint-installation-guide.readthedocs.io/en/latest/verify.html
+- **Linux Mint official bootable-media guide:** https://linuxmint-installation-guide.readthedocs.io/en/latest/burn.html
+- **balenaEtcher official download (Windows, macOS and Linux):** https://etcher.balena.io/
+
+For this project choose the current **Cinnamon 64-bit** image from the Linux Mint download page. Avoid hard-coding a mirror ISO URL or checksum in this repository because release filenames, mirrors and hashes change over time.
+
 ## 1. Download Linux Mint
 
-Download the Cinnamon 64-bit ISO from the official Linux Mint website or one of its official mirrors.
+Open the official Linux Mint download page:
 
-Do not download installation images from random file-hosting sites, forums or unofficial mirrors.
+https://www.linuxmint.com/download.php
+
+Choose **Cinnamon 64-bit** and download the ISO from one of the mirrors listed by Linux Mint.
+
+Do not download installation images from random file-hosting sites, forums, software-download aggregators or unofficial mirrors.
 
 ## 2. Verify the ISO before writing the USB
 
 Verifying the ISO protects against both corrupted downloads and modified images.
+
+Official instructions:
+
+https://linuxmint-installation-guide.readthedocs.io/en/latest/verify.html
 
 ### On Linux Mint
 
@@ -61,9 +81,13 @@ Before writing the image:
 
 ## 4. Create the bootable USB
 
+Linux Mint's official bootable-media instructions are available here:
+
+https://linuxmint-installation-guide.readthedocs.io/en/latest/burn.html
+
 ### From Linux Mint
 
-Linux Mint includes **USB Image Writer**.
+Linux Mint includes **USB Image Writer**, so no additional download is required.
 
 1. Right-click the downloaded ISO.
 2. Choose **Make Bootable USB Stick**, or open **Menu -> Accessories -> USB Image Writer**.
@@ -77,9 +101,13 @@ This graphical method is preferred over raw `dd` commands in a public beginner-f
 
 ### From Windows
 
-Linux Mint's installation documentation recommends a USB imaging application such as **balenaEtcher**.
+Linux Mint's installation documentation recommends **balenaEtcher**.
 
-1. Download Etcher from its official website.
+Official download:
+
+https://etcher.balena.io/
+
+1. Download Etcher only from the official balena website above.
 2. Start Etcher.
 3. Select the verified Linux Mint ISO.
 4. Select the USB stick.
@@ -91,15 +119,27 @@ If Windows offers to format partitions on the USB after flashing, cancel that re
 
 ### From macOS
 
-Use Etcher as documented by Linux Mint:
+Use Etcher as documented by Linux Mint.
 
-1. Install Etcher from its official source.
+Official download:
+
+https://etcher.balena.io/
+
+1. Install Etcher from the official balena website above.
 2. Select the verified ISO.
 3. Select the USB stick.
 4. Check the target carefully.
 5. Flash the image and let verification finish.
 
 macOS may report that the resulting disk is unreadable after imaging because it does not understand every filesystem on the Linux installer. Choose **Eject**, not **Initialize**.
+
+### From another Linux distribution
+
+Etcher is also available for Linux from its official site:
+
+https://etcher.balena.io/
+
+If the distribution already provides a trusted graphical ISO/USB writer, that can also be used. Prefer distribution-provided or official vendor software over third-party repackaging sites.
 
 ## 5. Boot the computer from USB
 
@@ -247,6 +287,8 @@ After that, the USB can be reformatted and reused normally.
 ## Safety principles
 
 ```text
+Download Linux Mint only from the official site or listed official mirrors.
+Download USB creation software only from its official vendor/project site.
 Verify the ISO.
 Back up important data.
 Confirm the target USB before flashing.
