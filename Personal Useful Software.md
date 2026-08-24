@@ -19,21 +19,44 @@ Review proposed changes before accepting major removals or replacements.
 
 ### Firefox
 
-Linux Mint includes Firefox by default. Keep it as the main browser unless there is a specific reason to replace it.
+Linux Mint includes Firefox by default. Keep it installed as a native/default browser option.
 
-### Google Chrome
+### Google Chrome — Recommended
 
-Install Google's official `.deb` package from Google's official site. Once installed, Chrome can receive updates through its vendor repository.
+**Google Chrome is recommended for this Developer Edition**, especially for web-development testing, Chromium compatibility, DevTools and workflows that depend on Google's browser ecosystem.
 
-Avoid copying a downloaded package command into automation unless the package source and signature/repository flow are clearly understood.
+Official download:
 
-### Tor Browser
+https://www.google.com/chrome/
+
+On Linux Mint, download the official **64-bit `.deb` package for Debian/Ubuntu** directly from Google. Do not use third-party download portals or repackaged installers.
+
+After downloading the package, install the exact downloaded file from its directory, for example:
+
+```bash
+sudo apt install ./google-chrome-stable_current_amd64.deb
+```
+
+APT resolves package dependencies and the official Google package normally configures Google's software source so future Chrome updates can be delivered through the package-management workflow.
+
+After installation, update normally with the rest of the system:
+
+```bash
+sudo apt update
+sudo apt upgrade
+```
+
+Do not put browser profiles, cookies, saved sessions or account data in this public repository.
+
+For a 16 GB workstation, avoid keeping several Chromium-based browsers open simultaneously unless required for testing.
+
+### Tor Browser — Optional
 
 Install Tor Browser only when needed and use the official Tor Project distribution or installation guidance. Do not place Tor profiles, bookmarks or configuration containing private information in this repository.
 
-### Opera
+### Opera — Optional
 
-Optional. Installing many Chromium-based browsers increases disk usage and background processes. For a 16 GB developer workstation, Firefox + Chrome normally cover daily use and web-development testing.
+Installing many Chromium-based browsers increases disk usage and background processes. For a 16 GB developer workstation, Firefox + Chrome normally cover daily use and web-development testing.
 
 ## Thunderbird
 
@@ -133,14 +156,22 @@ sudo apt install wireguard
 
 Never commit WireGuard private keys, `.ovpn` files containing credentials, provider tokens, private endpoints or company VPN configuration.
 
-## Google Drive / cloud storage
+## Google Drive — Optional
 
-Google does not provide the same first-party Drive desktop synchronization client for Linux as on macOS/Windows. Depending on the workflow, consider:
+**Google Drive integration is optional.** Install/configure it only if cloud synchronization or Drive access is actually required.
 
-- browser access;
-- desktop online-account integration;
-- `rclone`;
-- a maintained third-party synchronization client.
+Google Drive web:
+
+https://drive.google.com/
+
+Google does not provide the same first-party Google Drive for desktop synchronization client for Linux as it does for Windows and macOS. Do not download unofficial software claiming to be an official Google Drive Linux desktop client.
+
+Recommended options, from simplest to more advanced:
+
+1. **Browser access** — use Google Drive directly from Chrome or Firefox when file synchronization is not required.
+2. **Linux desktop online-account integration** — useful when the desktop environment provides suitable Google account/file access.
+3. **rclone** — recommended for command-line, backup, copy and scripted cloud workflows.
+4. **Maintained third-party synchronization client** — only when true desktop synchronization is required; evaluate its security, maintenance status and licensing before installing it.
 
 For command-line/cloud workflows:
 
@@ -154,7 +185,9 @@ Configure it locally:
 rclone config
 ```
 
-`rclone.conf` can contain sensitive tokens and remote configuration. Do not commit it to this repository.
+Before using synchronization commands, understand their direction and deletion behavior. Prefer non-destructive copy/list operations until the remote configuration has been tested.
+
+`rclone.conf` may contain OAuth tokens and remote configuration. **Never commit it to this public repository.** Likewise, never publish Google account identifiers, exported credentials or cloud file listings containing private information.
 
 ## Photopea
 
@@ -297,7 +330,7 @@ Do **not** disable unfamiliar system services just because they appear in a list
 
 ```text
 Firefox
-Google Chrome (when Chromium testing is needed)
+Google Chrome (Recommended)
 Thunderbird
 VLC
 LibreOffice
@@ -307,6 +340,7 @@ Photopea
 Spotify or Spotify Web
 WhatsApp Web/PWA
 Slack or Slack Web/PWA
+Google Drive access (Optional)
 ```
 
 Install additional software only when it has a real use. Fewer resident services and Electron/Chromium applications leave more RAM and CPU available for IDEs and Docker.
